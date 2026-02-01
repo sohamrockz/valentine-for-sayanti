@@ -24,22 +24,16 @@
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-      animation: pop 0.6s ease;
       z-index: 2;
     }
 
-    h1 {
-      color: #ff4d6d;
-    }
-
-    p {
-      font-size: 18px;
-      color: #555;
-    }
+    h1 { color: #ff4d6d; }
+    p { font-size: 18px; color: #555; }
 
     .hint {
       font-size: 14px;
       color: #999;
+      margin-top: 10px;
     }
 
     button {
@@ -62,6 +56,15 @@
       position: absolute;
     }
 
+    .volume {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 3;
+    }
+
     .heart {
       position: absolute;
       font-size: 24px;
@@ -81,26 +84,20 @@
     @keyframes fall {
       to { transform: translateY(110vh) rotate(360deg); }
     }
-
-    .volume {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      font-size: 24px;
-      cursor: pointer;
-      z-index: 3;
-    }
   </style>
 </head>
 
 <body onclick="startMusic()">
 
-  <audio id="bgMusic" loop>
+  <!-- Background Music -->
+  <audio id="bgMusic" autoplay loop muted>
     <source src="https://cdn.pixabay.com/audio/2023/03/13/audio_0e2d8a7c1b.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Volume -->
   <div class="volume" onclick="toggleMusic()">🔊</div>
 
+  <!-- Main Card -->
   <div class="card">
     <h1>Sayanti 💕</h1>
     <p>Will you be my Valentine? 🥺👉👈</p>
@@ -109,15 +106,14 @@
     <button id="noBtn" onmouseover="moveNo()">No 🙈</button>
     <button onclick="openPreview()">🎬 Preview</button>
 
-    <div class="hint">🎧 Click anywhere for background music</div>
+    <div class="hint">🎧 Tap anywhere to enable music</div>
   </div>
 
   <!-- Video Overlay -->
   <div id="videoOverlay" style="
     display:none;
     position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
+    inset:0;
     background:rgba(0,0,0,0.85);
     justify-content:center;
     align-items:center;
@@ -125,8 +121,9 @@
     
     <div style="position:relative; width:90%; max-width:500px;">
       <span onclick="closePreview()" style="color:white; font-size:28px; cursor:pointer;">❌</span>
-      <video id="previewVideo" controls style="width:100%; border-radius:15px;">
-        <source src="preview.mp4" type="video/mp4">
+      <video id="previewVideo" controls playsinline preload="auto"
+             style="width:100%; border-radius:15px;">
+        <source src="./preview.mp4" type="video/mp4">
       </video>
     </div>
   </div>
@@ -137,6 +134,7 @@
 
     function startMusic() {
       if (!musicStarted) {
+        bgMusic.muted = false;
         bgMusic.volume = 0.5;
         bgMusic.play();
         musicStarted = true;
@@ -156,7 +154,10 @@
           <p style="color:white;">Opening WhatsApp 😳📱</p>
         </div>`;
       setTimeout(() => {
-        window.open("https://wa.me/?text=I%20clicked%20YES%20😳❤️", "_blank");
+        window.open(
+          "https://wa.me/?text=I%20clicked%20YES%20😳❤️",
+          "_blank"
+        );
       }, 1200);
     }
 
@@ -175,7 +176,6 @@
     function closePreview() {
       previewVideo.pause();
       videoOverlay.style.display = "none";
-      if (musicStarted && !muted) bgMusic.play();
     }
 
     function createBlossom() {
@@ -193,3 +193,4 @@
 
 </body>
 </html>
+
