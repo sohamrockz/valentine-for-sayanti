@@ -1,195 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>For Sayanti 💖</title>
+<meta charset="UTF-8">
+<title>For Sayanti 💖</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
-      font-family: 'Pacifico', cursive;
-      overflow: hidden;
+<style>
+  body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+    font-family: 'Pacifico', cursive;
+    overflow: hidden;
+  }
+
+  .card {
+    background: white;
+    padding: 35px 45px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    z-index: 2;
+  }
+
+  h1 { color: #ff4d6d; }
+  p { font-size: 18px; color: #555; }
+
+  .hint {
+    font-size: 14px;
+    color: #999;
+    margin-top: 10px;
+  }
+
+  /* 🔹 SAME SIZE BUTTONS */
+  button {
+    padding: 12px 26px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 8px;
+    min-width: 120px;
+    font-family: inherit;
+  }
+
+  #yesBtn {
+    background: #ff4d6d;
+    color: white;
+  }
+
+  #noBtn {
+    background: #ddd;
+    position: absolute;
+  }
+
+  #previewBtn {
+    background: #ffc0cb;
+  }
+
+  .volume {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 3;
+  }
+
+  /* 🌸 MORE BLOSSOMS */
+  .blossom {
+    position: absolute;
+    animation: fall linear infinite;
+    opacity: 0.9;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(360deg);
     }
-
-    .card {
-      background: white;
-      padding: 35px 45px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-      z-index: 2;
-    }
-
-    h1 { color: #ff4d6d; }
-    p { font-size: 18px; color: #555; }
-
-    .hint {
-      font-size: 14px;
-      color: #999;
-      margin-top: 10px;
-    }
-
-    button {
-      padding: 12px 28px;
-      font-size: 16px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      margin: 10px;
-      font-family: inherit;
-    }
-
-    #yesBtn {
-      background: #ff4d6d;
-      color: white;
-    }
-
-    #noBtn {
-      background: #ddd;
-      position: absolute;
-    }
-
-    .volume {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      font-size: 24px;
-      cursor: pointer;
-      z-index: 3;
-    }
-
-    .heart {
-      position: absolute;
-      font-size: 24px;
-      animation: floatUp 3s linear;
-    }
-
-    @keyframes floatUp {
-      to { transform: translateY(-120px); opacity: 0; }
-    }
-
-    .blossom {
-      position: absolute;
-      font-size: 20px;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      to { transform: translateY(110vh) rotate(360deg); }
-    }
-  </style>
+  }
+</style>
 </head>
 
 <body onclick="startMusic()">
 
-  <!-- Background Music -->
-  <audio id="bgMusic" autoplay loop muted>
-    <source src="https://cdn.pixabay.com/audio/2023/03/13/audio_0e2d8a7c1b.mp3" type="audio/mpeg">
-  </audio>
+<!-- 🎵 Background Music -->
+<audio id="bgMusic" loop>
+  <source src="./music.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- Volume -->
-  <div class="volume" onclick="toggleMusic()">🔊</div>
+<div class="volume" onclick="toggleMusic()">🔊</div>
 
-  <!-- Main Card -->
-  <div class="card">
-    <h1>Sayanti 💕</h1>
-    <p>Will you be my Valentine? 🥺👉👈</p>
+<div class="card">
+  <h1>Sayanti 💕</h1>
+  <p>Will you be my Valentine? 🥺👉👈</p>
 
-    <button id="yesBtn" onclick="yesClicked()">YES 😍</button>
-    <button id="noBtn" onmouseover="moveNo()">No 🙈</button>
-    <button onclick="openPreview()">🎬 Preview</button>
+  <button id="yesBtn" onclick="yesClicked()">YES 😍</button>
+  <button id="noBtn" onmouseover="moveNo()">No 🙈</button>
+  <button id="previewBtn" onclick="openPreview()">🎬 Preview</button>
 
-    <div class="hint">🎧 Tap anywhere to enable music</div>
+  <div class="hint">🎧 Tap anywhere to start music</div>
+</div>
+
+<!-- 🎬 Video Overlay -->
+<div id="videoOverlay" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+  z-index:999;">
+  
+  <div style="position:relative; width:90%; max-width:500px;">
+    <span onclick="closePreview()" style="color:white;font-size:28px;cursor:pointer;">❌</span>
+    <video id="previewVideo" controls playsinline style="width:100%;border-radius:15px;">
+      <source src="./preview.mp4" type="video/mp4">
+    </video>
   </div>
+</div>
 
-  <!-- Video Overlay -->
-  <div id="videoOverlay" style="
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.85);
-    justify-content:center;
-    align-items:center;
-    z-index:999;">
-    
-    <div style="position:relative; width:90%; max-width:500px;">
-      <span onclick="closePreview()" style="color:white; font-size:28px; cursor:pointer;">❌</span>
-      <video id="previewVideo" controls playsinline preload="auto"
-             style="width:100%; border-radius:15px;">
-        <source src="./preview.mp4" type="video/mp4">
-      </video>
-    </div>
-  </div>
+<script>
+  const bgMusic = document.getElementById("bgMusic");
+  const noBtn = document.getElementById("noBtn");
+  const videoOverlay = document.getElementById("videoOverlay");
+  const previewVideo = document.getElementById("previewVideo");
 
-  <script>
-    let musicStarted = false;
-    let muted = false;
+  let musicStarted = false;
+  let muted = false;
 
-    function startMusic() {
-      if (!musicStarted) {
-        bgMusic.muted = false;
-        bgMusic.volume = 0.5;
-        bgMusic.play();
-        musicStarted = true;
-      }
+  /* 🎵 MUSIC FIX */
+  function startMusic() {
+    if (!musicStarted) {
+      bgMusic.volume = 0.5;
+      bgMusic.play().catch(()=>{});
+      musicStarted = true;
     }
+  }
 
-    function toggleMusic() {
-      muted = !muted;
-      bgMusic.muted = muted;
-      document.querySelector(".volume").innerText = muted ? "🔇" : "🔊";
-    }
+  function toggleMusic() {
+    muted = !muted;
+    bgMusic.muted = muted;
+    document.querySelector(".volume").innerText = muted ? "🔇" : "🔊";
+  }
 
-    function yesClicked() {
-      document.body.innerHTML = `
-        <div style="text-align:center;">
-          <h1 style="color:white;">YAYYYY SAYANTI 💖🥰</h1>
-          <p style="color:white;">Opening WhatsApp 😳📱</p>
-        </div>`;
-      setTimeout(() => {
-        window.open(
-          "https://wa.me/?text=I%20clicked%20YES%20😳❤️",
-          "_blank"
-        );
-      }, 1200);
-    }
+  function yesClicked() {
+    document.body.innerHTML = `
+      <div style="text-align:center;">
+        <h1 style="color:white;">YAYYY SAYANTI 💖🥰</h1>
+        <p style="color:white;">Opening WhatsApp 😳📱</p>
+      </div>`;
+    setTimeout(() => {
+      window.open(
+        "https://wa.me/?text=I%20clicked%20YES%20😳❤️",
+        "_blank"
+      );
+    }, 1200);
+  }
 
-    function moveNo() {
-      noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-      noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
-    }
+  function moveNo() {
+    noBtn.style.left = Math.random() * (window.innerWidth - 130) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
+  }
 
-    function openPreview() {
-      bgMusic.pause();
-      videoOverlay.style.display = "flex";
-      previewVideo.currentTime = 0;
-      previewVideo.play();
-    }
+  function openPreview() {
+    bgMusic.pause();
+    videoOverlay.style.display = "flex";
+    previewVideo.currentTime = 0;
+    previewVideo.play();
+  }
 
-    function closePreview() {
-      previewVideo.pause();
-      videoOverlay.style.display = "none";
-    }
+  function closePreview() {
+    previewVideo.pause();
+    videoOverlay.style.display = "none";
+  }
 
-    function createBlossom() {
-      const b = document.createElement("div");
-      b.className = "blossom";
-      b.innerHTML = "🌸";
-      b.style.left = Math.random() * window.innerWidth + "px";
-      b.style.animationDuration = (5 + Math.random() * 5) + "s";
-      document.body.appendChild(b);
-      setTimeout(() => b.remove(), 10000);
-    }
+  /* 🌸 EXTRA BLOSSOMS */
+  function createBlossom() {
+    const b = document.createElement("div");
+    b.className = "blossom";
+    b.innerHTML = "🌸";
+    b.style.left = Math.random() * window.innerWidth + "px";
+    b.style.fontSize = (14 + Math.random() * 18) + "px";
+    b.style.animationDuration = (4 + Math.random() * 6) + "s";
+    document.body.appendChild(b);
+    setTimeout(() => b.remove(), 10000);
+  }
 
-    setInterval(createBlossom, 600);
-  </script>
+  setInterval(createBlossom, 300);
+</script>
 
 </body>
 </html>
